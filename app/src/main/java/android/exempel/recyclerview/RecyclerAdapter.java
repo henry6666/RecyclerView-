@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return moviesList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
         TextView textView, rowCountTextView;
@@ -66,6 +67,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             textView = itemView.findViewById(R.id.textView);
             rowCountTextView = itemView.findViewById(R.id.rowCountTextView);
 
+            itemView.setOnClickListener(this);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    // removes tha movie from the list
+                    moviesList.remove(getAdapterPosition());
+
+                    // removes the row from the recycler view
+                    notifyItemRemoved(getAdapterPosition());
+
+                    return true;
+                }
+            });
+
+        }
+
+
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(view.getContext(), moviesList.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
         }
     }
 }
