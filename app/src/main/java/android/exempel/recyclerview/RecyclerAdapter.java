@@ -10,19 +10,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     // logt + tab
     private static final String TAG = "RecyclerAdapter";
-    int count = 0;
+    //int count = 0;
 
+    List<String> moviesList;
+
+    public RecyclerAdapter(List<String> moviesList) {
+        this.moviesList = moviesList;
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // logi + tab
-        Log.i(TAG, "onCreateViewHolder: " + count++);
+        Log.i(TAG, "onCreateViewHolder: ");
 
         //Here you create the individual rows to display the items inside the recyclerview
 
@@ -37,11 +44,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        holder.rowCountTextView.setText(String.valueOf(position));
+        holder.textView.setText(moviesList.get(position));
+
+        //holder.imageView.;
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return moviesList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
